@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data. A general-purpose, intrinsically interpretable framework built from learnable optimization problems.">
+  <meta property="og:title" content="Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data">
+  <meta property="og:description" content="Learning interpretable and identifiable hierarchical optimization structures from data.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="static/images/bl_overview.webp">
+  <link rel="icon" type="image/svg+xml" href="static/favicon.svg">
+  <title>Behavior Learning (BL) — Learning Hierarchical Optimization Structures from Data</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap">
+  <style>
+    :root {
+      --paper:#ffffff;--ink:#1d2524;--soft:#3f4745;--muted:#67716e;--line:#e0e7e5;
+      --teal:#08736b;--teal-dark:#07574f;--tint:#f3f8f7;--tint-strong:#e5f1ee;
+      --code:#f7f9f8;--code-line:#e4e9e7;--width:812px;--gutter:clamp(19px,4.5vw,35px);
+      --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+      --sans:"Source Sans 3",Arial,sans-serif;
+      --mono:"Source Code Pro",ui-monospace,Consolas,monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{background:var(--paper);scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
+    body{margin:0;color:var(--ink);background:var(--paper);font-family:var(--serif);font-size:18px;line-height:1.64;-webkit-font-smoothing:antialiased}
+    ::selection{background:#d2eae5}
+    a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:.16em}
+    a:hover{color:var(--teal-dark)}
+    a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:4px}
+    img{max-width:100%;height:auto}
+    p{margin:0;text-wrap:pretty}
+    strong{font-weight:600}
+    .wrap{max-width:calc(var(--width) + 2 * var(--gutter));padding:0 var(--gutter);margin:auto}
+    .site-nav{border-bottom:1px solid var(--line);font-family:var(--sans);font-size:13px;color:var(--muted)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:49px}
+    .wordmark{font-weight:700;letter-spacing:.03em;color:var(--teal);text-decoration:none;white-space:nowrap}
+    .nav-links{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center}
+    .nav-links a{color:var(--soft);text-decoration:none}
+    .nav-links a:hover{color:var(--teal)}
+    .masthead{text-align:center;padding:clamp(52px,8vw,82px) 0 0}
+    .masthead .kicker{font-family:var(--sans);color:var(--teal);font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-bottom:14px}
+    h1{font-size:clamp(33px,5vw,45px);line-height:1.12;letter-spacing:-.026em;font-weight:600;margin:0;text-wrap:balance}
+    h1 .name{color:var(--teal)}
+    h1 .subtitle{display:block;font-weight:600;font-size:clamp(25px,3.65vw,33px);line-height:1.23;letter-spacing:-.015em;margin-top:5px}
+    .authors{margin:25px 0 0;display:flex;justify-content:center;flex-wrap:wrap;gap:3px 25px;font-family:var(--sans);font-size:19px;font-weight:500}
+    .authors a{color:inherit;text-decoration:none}
+    .authors a:hover{color:var(--teal)}
+    .affiliations{font-family:var(--sans);color:var(--muted);font-size:15px;line-height:1.6;margin:9px 0 0}
+    .affiliations span+span::before{content:"·";margin:0 10px;color:#a2aca8}
+    sup{font-size:.65em;color:var(--muted)}
+    .links{list-style:none;margin:27px 0 0;padding:0;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .pill{font-family:var(--sans);font-size:14px;line-height:1.25;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:40px;padding:10px 17px;border-radius:999px;border:1px solid var(--teal);background:var(--teal);color:white;transition:background .15s,border-color .15s}
+    .pill:hover{background:var(--teal-dark);color:white;border-color:var(--teal-dark)}
+    .pill.secondary{background:white;color:var(--teal)}
+    .pill.secondary:hover{background:var(--tint);color:var(--teal-dark)}
+    .pill svg{height:15px;width:15px;fill:currentColor;flex:none}
+    .lead{margin-top:clamp(40px,7vw,61px)}
+    .eyebrow{font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.17em;color:var(--teal);font-weight:700;margin-bottom:7px}
+    .tldr{font-size:clamp(21px,2.8vw,25px);line-height:1.5;letter-spacing:-.005em}
+    .teaser{margin:33px 0 0}
+    figure{margin:0}
+    .image-frame{display:block;width:100%;border-radius:5px;overflow:hidden;background:#fff}
+    .image-frame img{display:block;width:100%;height:auto;object-fit:contain}
+    .image-frame:hover img{opacity:.95}
+    figcaption{font-family:var(--sans);font-size:14px;line-height:1.56;color:var(--soft);margin-top:11px}
+    .fig-num{color:var(--teal);font-weight:700;margin-right:6px}
+    .fig-title{color:var(--ink);font-weight:700}
+    .image-note{font-size:12px;color:var(--muted);font-family:var(--sans);margin-top:6px}
+    .abstract{background:var(--code);border:1px solid var(--code-line);border-radius:7px;margin-top:32px;padding:23px 25px}
+    .abstract h2{font-size:23px;margin:0 0 8px}
+    .abstract p{color:var(--soft);font-size:16.5px;line-height:1.68}
+    .sections{padding-bottom:86px}
+    section.content{padding-top:clamp(45px,6vw,60px)}
+    section.content+section.content:before{content:"";display:block;border-top:1px solid var(--line);margin-bottom:clamp(45px,6vw,60px)}
+    h2{font-size:clamp(27px,3.5vw,32px);letter-spacing:-.016em;font-weight:600;line-height:1.24;margin:0 0 18px}
+    h3{font-size:23px;line-height:1.25;font-weight:600;margin:30px 0 11px}
+    .prose>*+*{margin-top:17px}
+    .prose h3{margin-top:30px}
+    .prose figure{margin:26px 0 4px}
+    .prose figure+*{margin-top:22px}
+    .question{border-left:3px solid var(--teal);padding:5px 0 5px 20px;font-size:20px;line-height:1.5;margin:24px 0;color:var(--ink)}
+    .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+    .problem{padding:20px 21px;background:var(--tint);border:1px solid #d8e8e3;border-radius:6px}
+    .problem .n{font-family:var(--sans);font-weight:700;color:var(--teal);font-size:12px;letter-spacing:.11em;text-transform:uppercase;margin:0 0 8px}
+    .problem h3{font-size:19px;margin:0 0 7px}
+    .problem p{font-size:15.5px;line-height:1.55;color:var(--soft)}
+    .math-panel{padding:19px 16px;border:1px solid var(--code-line);border-radius:7px;background:var(--code);overflow-x:auto;margin:21px 0}
+    .math-title{font-family:var(--sans);color:var(--teal);font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;margin-bottom:6px}
+    .math-panel .equation{text-align:center;overflow-x:auto;white-space:nowrap;padding:9px 0 5px;font-size:1.04em}
+    .math-panel mjx-container[display="true"]{margin:.35em 0 !important;max-width:100%;overflow-x:auto;overflow-y:hidden}
+    .component-list{display:grid;gap:10px;margin-top:14px}
+    .component{display:grid;grid-template-columns:124px 1fr;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding:0 0 11px}
+    .component:last-child{border:none}
+    .component .tag{color:var(--teal);font-family:var(--sans);font-size:14px;font-weight:700}
+    .component p{font-size:16.5px;color:var(--soft)}
+    .architecture{display:grid;grid-template-columns:minmax(0,1fr) 245px;align-items:center;gap:30px;margin-top:20px}
+    .architecture-figure{background:#fff;border:1px solid var(--line);border-radius:7px;padding:12px}
+    .architecture-figure img{max-height:500px;width:100%;object-fit:contain}
+    .arch-item{padding:14px 0;border-bottom:1px solid var(--line)}
+    .arch-item:last-child{border:none}
+    .arch-item h3{font-size:20px;margin:0 0 5px}
+    .arch-item p{color:var(--soft);font-size:16.5px;line-height:1.56}
+    .result{border:1px solid #cfe2de;border-left:3px solid var(--teal);border-radius:7px;margin:16px 0;overflow:hidden}
+    .result h3{font-size:19px;line-height:1.35;margin:0;padding:12px 20px;background:var(--tint-strong)}
+    .result-body{padding:17px 20px;font-size:16.5px;color:var(--soft);line-height:1.62}
+    .result-body p+p{margin-top:12px}
+    .result-body .equation{margin-top:10px;overflow:auto;text-align:center}
+    .caption-heading{font-family:var(--sans);color:var(--teal);font-size:12px;text-transform:uppercase;font-weight:700;letter-spacing:.13em;margin-bottom:7px}
+    .band{background:var(--tint);border-left:3px solid var(--teal);padding:17px 20px;border-radius:0 6px 6px 0;font-size:17px;line-height:1.6;margin:24px 0}
+    .pathway{padding:18px 18px;background:var(--code);border:1px solid var(--code-line);border-radius:7px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;justify-content:center;margin:21px 0;font-family:var(--sans);font-size:14px}
+    .pathway span{background:white;border:1px solid var(--line);border-radius:5px;padding:9px 11px;text-align:center}
+    .pathway b{color:var(--teal);font-size:17px;font-weight:600}
+    .empirical>h3{margin-top:31px}
+    .empirical>h3:first-child{margin-top:0}
+    .install{background:var(--code);border:1px solid var(--code-line);border-radius:7px;margin-top:18px}
+    .install-head{font-family:var(--sans);font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:10px 16px;border-bottom:1px solid var(--code-line)}
+    pre{margin:0;padding:16px 18px;overflow-x:auto;font-size:14px;line-height:1.7;font-family:var(--mono);white-space:pre}
+    pre code{font:inherit;color:var(--ink)}
+    .bib{background:var(--code);border:1px solid var(--code-line);border-radius:7px;margin-top:20px;overflow:hidden}
+    .bib-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:10px 15px;border-bottom:1px solid var(--code-line);font-size:12px;color:var(--muted);font-family:var(--mono)}
+    .copy{border:1px solid var(--teal);color:var(--teal);border-radius:99px;padding:4px 14px;background:white;font-family:var(--sans);font-weight:600;cursor:pointer}
+    .copy:hover{background:var(--teal);color:#fff}
+    footer{font-family:var(--sans);font-size:13px;color:var(--muted);padding:18px 0 35px;border-top:1px solid var(--line)}
+    footer .foot-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+    dialog{border:0;padding:0;border-radius:10px;box-shadow:0 18px 70px #17272466;max-width:96vw;max-height:95vh;overflow:hidden;background:white}
+    dialog::backdrop{background:#0e1a19c9}
+    .dialog-header{font-family:var(--sans);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding:11px 17px}
+    .dialog-header a{font-size:13px}
+    .dialog-close{border:0;background:var(--tint);border-radius:50%;font-size:22px;line-height:1;width:30px;height:30px;cursor:pointer}
+    dialog img{max-height:calc(95vh - 60px);max-width:95vw;object-fit:contain;display:block;margin:auto}
+    @media(max-width:640px){
+      body{font-size:17px;line-height:1.61}
+      .nav-inner{gap:10px}.nav-links{gap:8px 12px;font-size:12px}
+      .masthead{padding-top:44px}.authors{font-size:17px;gap:2px 17px}
+      .abstract{padding:19px}.abstract p{font-size:15.5px}
+      .problem-grid{grid-template-columns:1fr}
+      .architecture{grid-template-columns:1fr}.architecture-figure{max-width:305px;width:100%;margin:auto}
+      .component{grid-template-columns:1fr;gap:1px}
+      .math-panel{font-size:15px}.pathway{flex-direction:column}.pathway b{transform:rotate(90deg)}
+      figcaption{font-size:13px}.image-frame{overflow-x:auto}.image-frame.dense img{min-width:590px}
+      .links{gap:9px}.pill{font-size:13px;padding:9px 15px}
+    }
+    @media(max-width:410px){.nav-links a:nth-child(1),.nav-links a:nth-child(3){display:none}.affiliations span{display:block}.affiliations span+span::before{content:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+  </style>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[','\\]']], processEscapes: true },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Page navigation">
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="#top">BL / Behavior Learning</a>
+      <div class="nav-links">
+        <a href="#motivation">Motivation</a>
+        <a href="#framework">Framework</a>
+        <a href="#theory">Theory</a>
+        <a href="#results">Results</a>
+        <a href="#code">Code</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap" id="top">
+    <header class="masthead">
+      <div class="kicker">A general-purpose framework for scientific modeling</div>
+      <h1><span class="name">Behavior Learning (BL)</span><span class="subtitle">Learning Hierarchical Optimization Structures from Data</span></h1>
+      <div class="authors">
+        <span>Zhenyao Ma<sup>1</sup></span>
+        <span>Yue Liang<sup>2</sup></span>
+        <span>Dongxu Li<sup>3</sup></span>
+      </div>
+      <p class="affiliations"><span><sup>1</sup> Xiamen University</span><span><sup>2</sup> University of Tübingen</span><span><sup>3</sup> Xi'an Jiaotong University</span></p>
+      <ul class="links" aria-label="Resources">
+        <li><a class="pill" href="paper.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l5 5v14a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.8V8h4.2zM8 12v2h8v-2zm0 4v2h8v-2z"/></svg>Paper (PDF)</a></li>
+        <li><a class="pill secondary" href="https://arxiv.org/abs/2602.20152" target="_blank" rel="noopener">arXiv ↗</a></li>
+        <li><a class="pill secondary" href="https://github.com/MoonYLiang/Behavior-Learning" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .8a11.2 11.2 0 0 0-3.54 21.82c.56.1.76-.24.76-.54v-2.1c-3.08.67-3.73-1.3-3.73-1.3-.5-1.29-1.22-1.63-1.22-1.63-1-.67.08-.66.08-.66 1.1.08 1.68 1.13 1.68 1.13.98 1.67 2.57 1.19 3.2.91.1-.7.39-1.19.7-1.46-2.46-.28-5.05-1.23-5.05-5.51 0-1.22.44-2.22 1.15-3.01-.11-.28-.5-1.42.11-2.96 0 0 .94-.3 3.08 1.15a10.7 10.7 0 0 1 5.6 0c2.14-1.45 3.08-1.15 3.08-1.15.61 1.54.22 2.68.1 2.96.72.79 1.15 1.79 1.15 3.01 0 4.29-2.59 5.23-5.06 5.5.4.34.75 1.01.75 2.04v3.02c0 .3.2.65.77.54A11.2 11.2 0 0 0 12 .8z"/></svg>Code</a></li>
+      </ul>
+    </header>
+
+    <div class="lead">
+      <div class="eyebrow">The idea in one sentence</div>
+      <p class="tldr"><strong>Learn the optimization structure behind the data.</strong> BL models observed responses through learnable utility-maximization problems, combining predictive performance with intrinsic interpretability and, in its identifiable variant, principled statistical inference.</p>
+    </div>
+
+    <figure class="teaser">
+      <a href="static/images/bl_overview.webp" class="image-frame js-zoom" data-title="Behavior Learning — framework overview" aria-label="Enlarge Figure 1"><img src="static/images/bl_overview.webp" width="2600" height="1736" alt="Original BL overview figure: human behavior as a utility maximization problem; data and compositional utility yield a conditional distribution; optimization modules enable symbolic interpretation, prediction and generation; Single, Shallow and Deep architectures." fetchpriority="high"></a>
+      <figcaption><span class="fig-num">Figure 1.</span><span class="fig-title">Behavior Learning (BL).</span> (a) Behavior as a utility maximization problem. (b) Learning a compositional utility function from data. (c) Intrinsic interpretability and inference. (d) Architectures spanning a single optimization problem to hierarchical compositions. <span class="image-note">All figures are reproduced from the BL paper. Click any figure to enlarge.</span></figcaption>
+    </figure>
+
+    <div class="abstract" id="abstract">
+      <h2>Abstract</h2>
+      <p>Inspired by behavioral science, we propose <em>Behavior Learning</em> (BL), a novel general-purpose machine learning framework that learns interpretable and identifiable optimization structures from data, ranging from single optimization problems to hierarchical compositions. It unifies predictive performance, intrinsic interpretability, and identifiability, with broad applicability to scientific domains involving optimization. BL parameterizes a compositional utility function built from intrinsically interpretable modular blocks, which induces a data distribution for prediction and generation. Each block represents and can be written in symbolic form as a utility maximization problem (UMP), a foundational paradigm in behavioral science and a universal framework of optimization. BL supports architectures ranging from a single UMP to hierarchical compositions, the latter modeling hierarchical optimization structures. Its smooth and monotone variant (IBL) guarantees identifiability. Theoretically, we establish the universal approximation property of BL, and analyze the M-estimation properties of IBL. Empirically, BL demonstrates strong predictive performance, intrinsic interpretability and scalability to high-dimensional data. Code: <a href="https://github.com/MoonYLiang/Behavior-Learning" target="_blank" rel="noopener">MoonYLiang/Behavior-Learning</a> on GitHub; install via <code>pip install blnetwork</code>.</p>
+    </div>
+
+    <main class="sections">
+      <section id="motivation" class="content">
+        <h2>Why do we need Behavior Learning?</h2>
+        <div class="prose">
+          <p>Scientific research often grapples with phenomena that resist precise formalization, including human and social domains. Such phenomena are difficult to predict and even harder to falsify through theory alone. Interpretable machine learning offers a promising alternative, yet a long-standing tension remains: <strong>predictive performance and intrinsic interpretability often trade off.</strong></p>
+          <p>Existing efforts to reconcile these goals have made progress. But the BL paper identifies two further limitations that restrict their scientific applicability.</p>
+        </div>
+        <div class="problem-grid">
+          <div class="problem"><div class="n">Limitation 01</div><h3>Insufficient alignment with scientific theories</h3><p>Interpretability is often added to existing ML methods rather than grounded in scientific structures, such as optimization problems or differential equations.</p></div>
+          <div class="problem"><div class="n">Limitation 02</div><h3>Non-uniqueness of interpretations</h3><p>Non-identifiable models may admit distinct internal explanations for the same observable predictions, complicating ground-truth parameter estimation.</p></div>
+        </div>
+        <p class="question">Can we design an interpretable ML framework that mitigates the performance–interpretability trade-off while being <em>scientifically grounded and identifiable</em>?</p>
+        <p>BL answers this question by returning to a foundational paradigm of behavioral science: <strong>utility maximization</strong>.</p>
+      </section>
+
+      <section id="framework" class="content">
+        <h2>From behavior to optimization</h2>
+        <div class="prose">
+          <p>In behavioral science and decision theory, observed outcomes are often modeled as arising from a latent optimization process. Given contextual features \(\mathbf{x}\), an agent chooses a response \(\mathbf{y}\) by solving a <strong>utility maximization problem (UMP)</strong>:</p>
+        </div>
+        <div class="math-panel">
+          <div class="math-title">The utility maximization problem</div>
+          <div class="equation">\[\max_{\mathbf y\in\mathcal Y}\; U(\mathbf x,\mathbf y)\qquad\text{s.t.}\quad \mathcal C(\mathbf x,\mathbf y)\leq 0,\quad \mathcal T(\mathbf x,\mathbf y)=0.\]</div>
+        </div>
+        <div class="component-list">
+          <div class="component"><div class="tag">Utility · \(U\)</div><p>The agent's internal preferences or goals.</p></div>
+          <div class="component"><div class="tag">Inequality · \(\mathcal C\)</div><p>Constraints such as limited resources or budgets.</p></div>
+          <div class="component"><div class="tag">Equality · \(\mathcal T\)</div><p>Endogenous belief consistency or exogenous conservation laws.</p></div>
+        </div>
+        <div class="prose" style="margin-top:20px">
+          <p>Although BL is inspired by human behavior, the UMP is <strong>not domain-specific</strong>. The paper shows that constrained maximization and minimization problems can be equivalently expressed as UMPs, opening the door to applications in economics, statistical physics, evolutionary biology, and other domains involving optimization.</p>
+        </div>
+
+        <h3>Learning a compositional utility function</h3>
+        <div class="prose">
+          <p>BL models responses as sampled from a distribution induced by <strong>one UMP or a composition of interacting UMPs</strong>. Instead of fitting only a direct mapping from inputs to predictions, it learns the compositional utility \(\mathrm{BL}_{\Theta}(\mathbf{x},\mathbf{y})\), which parameterizes a conditional Gibbs distribution.</p>
+        </div>
+        <div class="math-panel">
+          <div class="math-title">Prediction and generation</div>
+          <div class="equation">\[p_{\tau}(\mathbf y\mid\mathbf x;\Theta)=\frac{\exp\!\left(\mathrm{BL}_{\Theta}(\mathbf x,\mathbf y)/\tau\right)}{Z_{\tau}(\mathbf x;\Theta)}.\]</div>
+        </div>
+        <p>The temperature \(\tau&gt;0\) controls response randomness. As \(\tau\to0\), the distribution concentrates on utility-maximizing responses. This makes the same learned structure useful for both prediction and generation.</p>
+
+        <h3>Each learnable block is an optimization problem</h3>
+        <p>The compositional utility is constructed from interpretable modular blocks \(\mathcal B\). Each block represents a penalty-based UMP: an objective, reduced by penalties for violating its constraints.</p>
+        <div class="math-panel">
+          <div class="math-title">An interpretable BL block</div>
+          <div class="equation">\[\begin{aligned}\mathcal B(\mathbf x,\mathbf y;\theta)={}&\;\lambda_0^\top\phi\!\left(U_{\theta_U}(\mathbf x,\mathbf y)\right)\\[-1pt]&-\lambda_1^\top\rho\!\left(\mathcal C_{\theta_C}(\mathbf x,\mathbf y)\right)\\[-1pt]&-\lambda_2^\top\psi\!\left(\mathcal T_{\theta_T}(\mathbf x,\mathbf y)\right).\end{aligned}\]</div>
+        </div>
+        <p>The implementation uses polynomial feature maps, with <strong>tanh</strong> for utility, <strong>ReLU</strong> for inequality penalties, and <strong>absolute value</strong> for equality penalties. Polynomial terms make objectives and constraints traceable and expressible symbolically.</p>
+
+        <h3>One problem, or an entire hierarchy</h3>
+        <p>BL composes these blocks into increasingly expressive optimization structures while preserving a clear interpretation of the underlying modules.</p>
+        <div class="architecture">
+          <div class="architecture-copy">
+            <div class="arch-item"><h3>BL(Single)</h3><p>One learnable block. A single UMP with maximal structural transparency.</p></div>
+            <div class="arch-item"><h3>BL(Shallow)</h3><p>A modest composition of interacting UMPs, with one or two intermediate layers.</p></div>
+            <div class="arch-item"><h3>BL(Deep)</h3><p>Multiple layers of UMP blocks. Their composition forms a hierarchical optimization structure.</p></div>
+          </div>
+          <figure class="architecture-figure"><a href="static/images/bl_architectures.webp" class="image-frame js-zoom" data-title="BL architectures" aria-label="Enlarge BL architectures"><img loading="lazy" src="static/images/bl_architectures.webp" width="676" height="1680" alt="Original paper diagram illustrating BL Single, Shallow, and Deep compositions of optimization modules."></a><figcaption>The three BL variants, adapted by cropping Figure 1(d).</figcaption></figure>
+        </div>
+        <div class="band"><strong>Interpretation in BL(Deep):</strong> bottom-layer modules encode local objectives; higher layers aggregate and coordinate them into coarse-grained optimization structures.</div>
+        <figure><a href="static/images/hierarchical_agents.webp" class="image-frame js-zoom" data-title="Interpreting hierarchical optimization" aria-label="Enlarge hierarchical optimization diagram"><img loading="lazy" src="static/images/hierarchical_agents.webp" width="1400" height="888" alt="An original paper illustration: micro-level agents interact beneath higher-level agents; each agent is a UMP, with layers describing hierarchical coordination."></a><figcaption><span class="fig-num">Figure 2.</span><span class="fig-title">Hierarchical interpretation.</span> Each block is an interpretable agent solving a UMP; upper layers aggregate and coordinate lower-level structures.</figcaption></figure>
+      </section>
+
+      <section id="theory" class="content">
+        <h2>Expressivity, interpretability, and identifiability</h2>
+        <div class="prose"><p>BL is designed to unify three objectives: predictive performance, intrinsic interpretability, and statistically meaningful identification. Its theoretical results clarify what each guarantee requires.</p></div>
+        <div class="result">
+          <h3>Universal approximation of BL</h3>
+          <div class="result-body"><p>For compact input and output domains and a <strong>strictly positive continuous conditional density</strong>, a sufficiently expressive finite BL architecture can approximate the target conditional distribution arbitrarily closely in uniform conditional KL divergence.</p><div class="equation">\[\sup_{\mathbf{x}\in\mathcal X}\mathrm{KL}\!\left(p^\star(\cdot\mid\mathbf{x})\,\|\,p_\tau(\cdot\mid\mathbf{x};\theta^\star)\right)&lt;\varepsilon.\]</div><p><em>Theorem: Universal Approximation of BL.</em> Required depth and width may depend on the approximation tolerance.</p></div>
+        </div>
+        <h3>Identifiable Behavior Learning (IBL)</h3>
+        <div class="prose"><p>Interpretability alone is not identification. To address non-unique parameter explanations, the paper introduces <strong>IBL</strong>, a smooth, monotone variant of BL. IBL replaces the standard penalty nonlinearities with differentiable alternatives, including <strong>softplus</strong> and a <strong>squared equality penalty</strong>.</p></div>
+        <div class="math-panel"><div class="math-title">A practical IBL block</div><div class="equation">\[\begin{aligned}\mathcal B^{\mathrm{id}}(\mathbf x,\mathbf y)={}&\lambda_0^\top\tanh\!\left(\mathbf p_u(\mathbf x,\mathbf y)\right)\\&-\lambda_1^\top\operatorname{softplus}\!\left(\mathbf p_c(\mathbf x,\mathbf y)\right)\\&-\lambda_2^\top\mathbf p_t(\mathbf x,\mathbf y)^{\odot2}.\end{aligned}\]</div></div>
+        <div class="result"><h3>Identifiability of IBL</h3><div class="result-body"><p>Under the paper's atomic injectivity, linear-independence, and minimal-representation assumption, <strong>IBL(Single), IBL(Shallow), and IBL(Deep) are identifiable in the parameter quotient space</strong>: parameters are determined up to the specified equivalence class.</p><p>Under additional conditions, the paper establishes consistency, universal consistency of the learned conditional distribution, asymptotic normality, and asymptotic efficiency.</p></div></div>
+        <p>These guarantees are <strong>conditional theoretical statements</strong>, not claims that an arbitrary deep BL parameterization is uniquely recovered from every finite dataset. See the paper for exact assumptions and proofs.</p>
+      </section>
+
+      <section id="results" class="content">
+        <h2>What does BL learn in practice?</h2>
+        <div class="prose"><p>The paper examines prediction, symbolic and hierarchical interpretation, scalability to high-dimensional inputs, and penalty-based constraint enforcement.</p></div>
+        <div class="empirical">
+          <h3>1. Predictive performance on tabular data</h3>
+          <p>Across <strong>10 datasets</strong> and <strong>10 baseline models</strong>, BL reaches first-tier predictive performance. In the paper's comparison, it achieves the strongest results among the intrinsically interpretable methods, and BL(Shallow) surpasses the MLP baseline.</p>
+          <figure><a href="static/images/prediction_benchmark.webp" class="image-frame dense js-zoom" data-title="Tabular predictive performance" aria-label="Enlarge prediction benchmarks"><img loading="lazy" src="static/images/prediction_benchmark.webp" width="1900" height="1056" alt="BL and baseline box-and-whisker plots of relative AUC, F1-Macro improvement, and average F1-Macro ranks on ten datasets."></a><figcaption><span class="fig-num">Figure 3.</span><span class="fig-title">Performance on standard prediction tasks.</span> Relative AUC and F1-Macro gains, and mean F1-Macro ranks, against the baselines from the original paper.</figcaption></figure>
+
+          <h3>2. From a learned model to a symbolic UMP</h3>
+          <p>On the <strong>Boston Housing</strong> dataset, BL(Single) is interpreted as a representative buyer's optimization problem, with explicit preference, budget, and belief terms. A shallow <strong>BL[2,1]</strong> recovers economic-sensitive and location-sensitive preference types; <strong>BL[5,3,1]</strong> reveals a deeper micro-to-macro hierarchy.</p>
+          <figure><a href="static/images/boston_housing_interpretation.webp" class="image-frame js-zoom" data-title="Boston Housing: symbolic and hierarchical interpretations" aria-label="Enlarge Boston Housing visualization"><img loading="lazy" src="static/images/boston_housing_interpretation.webp" width="1950" height="1877" alt="Original paper multi-panel case study: BL Single yields polynomial contributions and symbolic utility, constraints and beliefs; shallow and deep models illustrate hierarchical representative buyers."></a><figcaption><span class="fig-num">Figure 4.</span><span class="fig-title">Interpreting BL on Boston Housing.</span> A symbolic single-UMP interpretation, two-layer preference aggregation, and a three-layer micro-to-macro hierarchy; applications to other scientific hierarchies are also illustrated.</figcaption></figure>
+          <p>For instance, the paper reports a simplified utility polynomial containing the interaction between housing price and room count:</p>
+          <div class="math-panel"><div class="math-title">Example: recovered symbolic preference terms</div><div class="equation">\[\mathbf p_u\approx-0.56P^2-0.6\mathrm{RM}+0.57\mathrm{RM}\cdot P+\widetilde{R}_u.\]</div></div>
+          <p>The omitted terms are absorbed into \(\widetilde{R}_u\); this is an <em>approximate extracted expression</em>, not a claim of exact structural identification.</p>
+
+          <h3>3. Scaling to image and text inputs</h3>
+          <p>With parameter-matched energy-based MLP (E-MLP) comparisons, BL shows <strong>comparable in-distribution accuracy on image tasks</strong> and improved in-distribution accuracy across the tested text tasks. Out-of-distribution detection is dataset-dependent: BL does better on Yelp, while E-MLP performs better on AG News. BL also reports favorable calibration; training time is generally somewhat higher.</p>
+          <figure><a href="static/images/high_dimensional_results.webp" class="image-frame js-zoom" data-title="BL versus E-MLP on image and text datasets" aria-label="Enlarge high-dimensional results"><img loading="lazy" src="static/images/high_dimensional_results.webp" width="1450" height="1806" alt="Original paper BL vs energy-based MLP results for in-distribution accuracy and out-of-distribution AUROC, for image and text datasets at different depths."></a><figcaption><span class="fig-num">Figure 5.</span><span class="fig-title">High-dimensional inputs.</span> Accuracy and OOD AUROC trade-offs at network depths 1–3 on image and text tasks.</figcaption></figure>
+
+          <h3>4. Does the learned penalty enforce constraints?</h3>
+          <p>In a <strong>64-dimensional energy-conservation</strong> diagnostic, the paper isolates BL's equality-penalty mechanism. At the tested finite temperatures, conservation violations generally decline with decreasing temperature or increasing penalty weight.</p>
+          <figure><a href="static/images/energy_conservation.webp" class="image-frame js-zoom" data-title="Energy conservation diagnostic" aria-label="Enlarge constraint enforcement results"><img loading="lazy" src="static/images/energy_conservation.webp" width="1350" height="1002" alt="Four plots: mean and 95th-percentile violations, and near-feasible fractions, varying temperature and penalty coefficient in the energy conservation experiment."></a><figcaption><span class="fig-num">Figure 6.</span><span class="fig-title">Penalty-based constraint enforcement.</span> Constraint violations and near-feasible sample fractions as the temperature and penalty scale change.</figcaption></figure>
+        </div>
+      </section>
+
+      <section id="perspective" class="content">
+        <h2>Reading a learned hierarchy as science</h2>
+        <p>The paper describes a bottom-up interpretation of BL(Deep). Each block is a local optimization problem; higher layers summarize, reorganize, and coordinate the structures learned by lower layers. Analogies include organizational hierarchies, representative agents, and coarse-graining in statistical physics.</p>
+        <div class="pathway" aria-label="Scientific interpretation pathway"><span>Raw input features</span><b>→</b><span>Micro-level UMP blocks</span><b>→</b><span>Coarse-grained constructs</span><b>→</b><span>Macro-level systems</span></div>
+        <p>In this view, BL is not merely a predictor with post-hoc explanations: <strong>its interpretable optimization blocks are the model itself.</strong> The resulting hierarchies offer candidate scientific descriptions to inspect, compare, and test.</p>
+      </section>
+
+      <section id="code" class="content">
+        <h2>Code and installation</h2>
+        <p>The authors provide the implementation on <a href="https://github.com/MoonYLiang/Behavior-Learning" target="_blank" rel="noopener">GitHub</a>. The package can be installed from PyPI with the command given in the paper:</p>
+        <div class="install"><div class="install-head">Terminal</div><pre tabindex="0"><code>pip install blnetwork</code></pre></div>
+        <p style="margin-top:16px">For training examples, configurations, and updates, see the <a href="https://github.com/MoonYLiang/Behavior-Learning" target="_blank" rel="noopener">official repository</a>. A local copy of the <a href="paper.pdf" target="_blank" rel="noopener">paper PDF</a> is also included with this webpage.</p>
+      </section>
+
+      <section id="citation" class="content">
+        <h2>Citation</h2>
+        <p>For the complete framework, proofs, experimental protocols, and discussion, please refer to the manuscript.</p>
+        <div class="bib"><div class="bib-head"><span>ma2026behaviorlearning</span><button type="button" id="copy-bibtex" class="copy">Copy BibTeX</button></div><pre tabindex="0"><code id="bibtex-code">@article{ma2026behaviorlearning,
+  title   = {Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data},
+  author  = {Ma, Zhenyao and Liang, Yue and Li, Dongxu},
+  journal = {arXiv preprint arXiv:2602.20152},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2602.20152}
+}</code></pre></div>
+      </section>
+    </main>
+  </div>
+
+  <footer><div class="wrap foot-inner"><span>Behavior Learning (BL) · Original manuscript and figures</span><span><a href="#top">Back to top ↑</a> · <a href="https://arxiv.org/abs/2602.20152" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/MoonYLiang/Behavior-Learning" target="_blank" rel="noopener">GitHub</a></span></div></footer>
+
+  <dialog id="zoom-dialog" aria-label="Enlarged paper figure"><div class="dialog-header"><span id="zoom-title">Paper figure</span><span><a id="zoom-open" href="#" target="_blank" rel="noopener">Open full image ↗</a> &nbsp; <button class="dialog-close" type="button" id="zoom-close" aria-label="Close enlarged figure">×</button></span></div><img id="zoom-img" alt="Enlarged figure"></dialog>
+  <script>
+    (function(){
+      const button=document.getElementById('copy-bibtex');
+      const code=document.getElementById('bibtex-code');
+      const fallback=()=>{let s=window.getSelection(),r=document.createRange();r.selectNodeContents(code);s.removeAllRanges();s.addRange(r);button.textContent='Selected';};
+      button.addEventListener('click',()=>{const text=code.textContent; if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(()=>button.textContent='Copied!',fallback);}else{fallback();}setTimeout(()=>button.textContent='Copy BibTeX',1800);});
+      const modal=document.getElementById('zoom-dialog');const enlarged=document.getElementById('zoom-img');const open=document.getElementById('zoom-open');const title=document.getElementById('zoom-title');
+      document.querySelectorAll('.js-zoom').forEach(link=>link.addEventListener('click',e=>{if(typeof modal.showModal!=='function')return;e.preventDefault();enlarged.src=link.href;enlarged.alt=link.querySelector('img').alt;open.href=link.href;title.textContent=link.dataset.title||'Paper figure';modal.showModal();}));
+      document.getElementById('zoom-close').addEventListener('click',()=>modal.close());
+      modal.addEventListener('click',e=>{if(e.target===modal)modal.close();});
+    })();
+  </script>
+</body>
+</html>
