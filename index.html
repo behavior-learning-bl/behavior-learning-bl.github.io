@@ -164,6 +164,7 @@
         <a href="#theory">Theory</a>
         <a href="#results">Results</a>
         <a href="#code">Code</a>
+        <a href="#across-sciences">Across Sciences</a>
       </div>
     </div>
   </nav>
@@ -343,10 +344,49 @@
   url = {https://arxiv.org/abs/2602.20152}
 }</code></pre></div>
       </section>
+
+      <section id="across-sciences" class="content" aria-labelledby="across-sciences-title">
+        <h2 id="across-sciences-title">Optimization as a Common Language Across Sciences</h2>
+        <div class="prose">
+          <p>The framework developed in the paper raises a broader scientific question: how can models learned from observations be connected to the principles used to explain those observations? Across behavioral science, economics, and physics, objectives and constraints provide a common mathematical language, even when the phenomena and interpretations differ. Specifying these structures in advance can be difficult; learning only an input–output mapping leaves their scientific meaning unresolved. Behavior Learning approaches this difficulty by learning interpretable optimization structures through a compositional utility function. The following research questions connect this modeling perspective to disciplinary concerns, while distinguishing mathematical representation, statistical identification, and empirical evidence.</p>
+
+          <h3>Can latent objectives and constraints underlying human behavior be learned from data?</h3>
+          <p>Behavioral science often represents actions as solutions to a utility maximization problem (UMP), conditional on an environment. BL makes the objective and constraint terms learnable, allowing observed responses to inform a symbolic optimization structure. This provides a model of behavior whose components can be inspected and tested. Its interpretation remains a modeling hypothesis: fitting a UMP does not establish that every observed action results from an actual optimization process.</p>
+
+          <h3>How can decision-making be modeled through interpretable utility-based mechanisms?</h3>
+          <p>Decisions may vary even under similar observed conditions. In BL, a conditional Gibbs distribution assigns greater probability to responses with higher compositional utility, while temperature controls stochasticity. This connects utility-based representations with probabilistic choice and preference learning. The learned utility describes response probabilities within the model; interpreting its terms as psychological preferences requires evidence beyond predictive agreement.</p>
+
+          <h3>Can economic utility functions and constraints be learned without fully specifying them in advance?</h3>
+          <p>Economic structural modeling connects observations to objectives, resource limits, and beliefs. BL retains these optimization roles while learning their parameterized expressions within a chosen basis and architecture. The <a href="#results">Boston Housing case study</a> illustrates a representative-buyer interpretation and hierarchical preference aggregation. It demonstrates how a fitted model can be read economically.</p>
+
+          <h3>Can an underlying optimization problem be inferred from observed solutions?</h3>
+          <p>Forward optimization computes solutions from a specified objective and feasible set; data-driven inverse optimization learns aspects of that problem from observations. BL approaches the inverse task through distributional modeling, jointly learning utility and constraint terms. BL(Single) represents one UMP, whereas shallow and deep architectures represent hierarchical compositions. The <a href="#framework">UMP formulation</a> accommodates constrained maximization and minimization; recovering a fitted structure is distinct from identifying its generating mechanism.</p>
+
+          <h3>Can a predictive model be intrinsically interpretable and statistically identifiable?</h3>
+          <p>BL locates intrinsic interpretability in its symbolic optimization blocks. Identifiability requires further restrictions: the smooth, monotone variant IBL is identifiable in a parameter quotient space under atomic injectivity, linear independence, and minimal-representation assumptions. Its consistency results require additional conditions, with parameter recovery requiring correct specification. These <a href="#theory">theoretical guarantees</a> distinguish uniqueness within a model class from unconditional recovery of a true scientific mechanism.</p>
+
+          <h3>What connects utility maximization, energy minimization, and Gibbs distributions?</h3>
+          <p>Taking energy as the negative of compositional utility makes utility maximization correspond to energy minimization, with the same conditional Gibbs distribution at a given temperature. BL shares Gibbs modeling and, for continuous responses, denoising score matching with energy-based models. Its structural distinction is an explicit composition of symbolic UMP blocks, giving the learned energy landscape an optimization-based interpretation.</p>
+
+          <h3>How can learned objectives and constraints connect to variational formulations in physics?</h3>
+          <p>Constrained optimization offers a conceptual connection to physical models expressed through objectives and admissibility conditions. BL represents these roles through utility and penalty terms, and its energy-conservation diagnostic examines constraint enforcement under finite-temperature Gibbs sampling. This motivates investigating suitable variational formulations; it does not establish equivalence to all physical variational principles or a general theory of variational free-energy learning.</p>
+
+          <h3>How might local objectives and interactions be represented in hierarchical social systems?</h3>
+          <p>Hierarchical composition allows lower-level UMP blocks to encode local objectives and higher-level blocks to aggregate their outputs. The paper interprets this organization through representative agents, coordination, and a coarse-graining analogy. Such multi-level descriptions suggest a modeling perspective for social organizations. The learned hierarchy is an inspectable feature of the model, whose correspondence to social agents or causal relationships requires independent validation.</p>
+
+          <h3>Can optimization-based representations help model adaptation and evolutionary systems?</h3>
+          <p>Where an adaptive process admits a useful optimization description, learnable objectives and constraints could provide a way to formulate and compare candidate models. The paper identifies evolutionary biology as a future research direction, without presenting biological validation. This potential application depends on the process and observational setting; it does not assume that evolution universally maximizes a single global fitness function.</p>
+
+          <h3>Can one mathematical language connect behavioral, social, and physical systems?</h3>
+          <p>The universality of the UMP formulation provides a shared representation for optimization problems, while BL supplies learnable hierarchical compositions and conditional distributions. Its approximation theory concerns representational capacity under stated assumptions. Together, these results support a common language for scientific modeling, but empirical adequacy must be assessed separately in each domain through observations, substantive interpretation, and tests of the proposed explanation.</p>
+
+          <p>Across these questions, the scientific opportunity is to express a learned model in terms of objectives, constraints, and their composition, so that its interpretation can be examined alongside its predictions. The manuscript establishes a framework and specific theoretical and experimental results; extending those results to new systems requires domain knowledge, appropriate statistical assumptions, and empirical tests.</p>
+        </div>
+      </section>
     </main>
   </div>
 
-  <footer><div class="wrap foot-inner"><span>Behavior Learning (BL) · Original manuscript and figures</span><span><a href="#top">Back to top ↑</a> · <a href="https://arxiv.org/abs/2602.20152" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/MoonYLiang/Behavior-Learning" target="_blank" rel="noopener">GitHub</a></span></div></footer>
+  <footer><div class="wrap foot-inner"><span>Behavior Learning (BL) · Project Website</span><span><a href="#top">Back to top ↑</a> · <a href="https://arxiv.org/abs/2602.20152" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/MoonYLiang/Behavior-Learning" target="_blank" rel="noopener">GitHub</a></span></div></footer>
 
   <dialog id="zoom-dialog" aria-label="Enlarged paper figure"><div class="dialog-header"><span id="zoom-title">Paper figure</span><span><a id="zoom-open" href="#" target="_blank" rel="noopener">Open full image ↗</a> &nbsp; <button class="dialog-close" type="button" id="zoom-close" aria-label="Close enlarged figure">×</button></span></div><img id="zoom-img" alt="Enlarged figure"></dialog>
   <script>
