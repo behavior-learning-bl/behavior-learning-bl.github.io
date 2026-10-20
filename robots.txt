@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://behavior-learning-bl.github.io/sitemap.xml
