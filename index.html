@@ -165,6 +165,8 @@
         <a href="#results">Results</a>
         <a href="#code">Code</a>
         <a href="#across-sciences">Across Sciences</a>
+        <a href="#research-lineage">Research Lineage</a>
+        <a href="#citation">Citation</a>
       </div>
     </div>
   </nav>
@@ -320,31 +322,6 @@
         <p style="margin-top:16px">For training examples, configurations, and updates, see the <a href="https://github.com/MoonYLiang/Behavior-Learning" target="_blank" rel="noopener">official repository</a>. The <a href="https://arxiv.org/pdf/2602.20152" target="_blank" rel="noopener">paper PDF</a> is available on arXiv.</p>
       </section>
 
-      <section id="citation" class="content">
-        <h2>Citation</h2>
-        <p>For the complete framework, proofs, experimental protocols, and discussion, please refer to the manuscript.</p>
-        <div class="bib"><div class="bib-head"><span>ICLR proceedings / arXiv</span><button type="button" id="copy-bibtex" class="copy">Copy BibTeX</button></div><pre tabindex="0"><code id="bibtex-code">@inproceedings{ZhenyaoBehaviorICLR,
- author = {Ma, Zhenyao and Liang, Yue and Li, Dongxu},
- booktitle = {International Conference on Learning Representations},
- editor = {C. Vondrick and B. Hariharan and C. Raffel and L. Pinto and D. Yang and A. Faust},
- pages = {115378--115425},
- title = {Behavior Learning (BL)},
- url = {https://proceedings.iclr.cc/paper_files/paper/2026/file/bbb397739546de027bc81a2c2a8fb119-Paper-Conference.pdf},
- volume = {2026},
- year = {2026}
-}
-
-@misc{ma2026behaviorlearningbllearning,
-      title={Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data}, 
-      author={Zhenyao Ma and Yue Liang and Dongxu Li},
-      year={2026},
-      eprint={2602.20152},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2602.20152}, 
-}</code></pre></div>
-      </section>
-
       <section id="across-sciences" class="content" aria-labelledby="across-sciences-title">
         <h2 id="across-sciences-title">Optimization as a Common Language Across Sciences</h2>
         <div class="prose">
@@ -382,6 +359,46 @@
 
           <p>Across these questions, the scientific opportunity is to express a learned model in terms of objectives, constraints, and their composition, so that its interpretation can be examined alongside its predictions. The manuscript establishes a framework and specific theoretical and experimental results; extending those results to new systems requires domain knowledge, appropriate statistical assumptions, and empirical tests.</p>
         </div>
+      </section>
+
+      <section id="research-lineage" class="content" aria-labelledby="research-lineage-title">
+        <h2 id="research-lineage-title">Beyond Behavior Learning</h2>
+        <div class="prose">
+          <p>Behavior Learning (BL) provides a general-purpose foundation for learning interpretable optimization structures from data. Building on this foundation, subsequent research explores new learning methods, scientific discovery frameworks, and applications across disciplines.</p>
+          <p>The following works trace a growing research lineage rooted in BL, where new ideas build upon existing foundations, branch into different directions, and open further possibilities for scientific modeling and discovery.</p>
+          <div class="research-list">
+            <article class="prose">
+              <h3><a href="https://optscientist.github.io/" target="_blank" rel="noopener">OptScientist: Automated Discovery of Optimization Laws</a></h3>
+              <p>Project Website: <a href="https://optscientist.github.io/" target="_blank" rel="noopener">https://optscientist.github.io/</a></p>
+              <p>Extends BL from learning interpretable optimization structures to discovering compact symbolic optimization laws from data.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="citation" class="content">
+        <h2>Citation</h2>
+        <p>For the complete framework, proofs, experimental protocols, and discussion, please refer to the manuscript.</p>
+        <div class="bib"><div class="bib-head"><span>ICLR proceedings / arXiv</span><button type="button" id="copy-bibtex" class="copy">Copy BibTeX</button></div><pre tabindex="0"><code id="bibtex-code">@inproceedings{ZhenyaoBehaviorICLR,
+ author = {Ma, Zhenyao and Liang, Yue and Li, Dongxu},
+ booktitle = {International Conference on Learning Representations},
+ editor = {C. Vondrick and B. Hariharan and C. Raffel and L. Pinto and D. Yang and A. Faust},
+ pages = {115378--115425},
+ title = {Behavior Learning (BL)},
+ url = {https://proceedings.iclr.cc/paper_files/paper/2026/file/bbb397739546de027bc81a2c2a8fb119-Paper-Conference.pdf},
+ volume = {2026},
+ year = {2026}
+}
+
+@misc{ma2026behaviorlearningbllearning,
+      title={Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data},
+      author={Zhenyao Ma and Yue Liang and Dongxu Li},
+      year={2026},
+      eprint={2602.20152},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2602.20152},
+}</code></pre></div>
       </section>
     </main>
   </div>
